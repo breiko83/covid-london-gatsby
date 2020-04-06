@@ -74,8 +74,6 @@ export default () => {
           })          
         }
         setCovidData(utlas) 
-        console.log(londonBoroughs.length, boroughs.length);
-        
 
       })
       .catch((err) => {
