@@ -76,16 +76,23 @@ export default (props) => {
     return total;
   }
 
+  function getLastUpdated(filteredData){
+    const element = filteredData[0].data
+    const lastUpdated = element[element.length-1][0]
+    return new Date(lastUpdated).toLocaleDateString("en-GB");
+  }
+
   const filteredData = filterData(props.data, props.filter)
   const today = getDelta(filteredData, 1)  
   const avgDelta = averageDelta(filteredData)
   const dailyDelta = ((today - avgDelta) / ((avgDelta + today) / 2) * 100).toFixed(1)
   const totalCases = getTotalCases(filteredData)
-
+  const lastUpdated = getLastUpdated(filteredData)
 
   return (
     <div className='stats'>
       <ul>
+        <li className="info">Last update: {lastUpdated}</li>
         <li>Daily cases: {today} (<span className={dailyDelta <= 0 ? "green" : "red"}>{dailyDelta <= 0 ? "" : "+"}{dailyDelta}%</span>)</li>
         <li className="info">Total cases: {totalCases}</li>
         <li className="info">Average daily increase: {avgDelta <= 0 ? "" : "+"}{avgDelta.toFixed(1)}</li>
