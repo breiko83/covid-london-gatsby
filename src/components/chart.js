@@ -10,8 +10,6 @@ export default (props) => {
   ]
 
   function filterData(data, boroughs) {
-    console.log('filterData');
-    console.log(boroughs);
     
     let utlas = []
 
