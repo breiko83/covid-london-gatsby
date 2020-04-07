@@ -39,7 +39,7 @@ export default (props) => {
   return (
     <div style={{
       width: '100%',
-      height: '50vh'
+      height: '40vh'
     }} className='chart'>
       <Chart data={filterData(props.data,props.filter)} axes={axes} tooltip/>
     </div>
