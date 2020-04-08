@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { navigate } from "gatsby"
 import Chart from '../components/chart'
 import Stats from '../components/stats'
+const _ = require('lodash')
 
 const londonBoroughs = [
   'Barking and Dagenham',
@@ -36,11 +38,14 @@ const londonBoroughs = [
   'Wandsworth',
   'Westminster']
 
-export default (props) => {
+export default ({pageContext}) => {
+
 
   const [rawData, setRawData] = useState()
-  const [covidData, setCovidData] = useState()
-  const [boroughs, setBoroughs] = useState(londonBoroughs)
+  const [boroughs, setBoroughs] = useState(window.history.state.boroughs || londonBoroughs)
+
+  console.log('window.history.state: ', window.history.state);
+  
 
 
   useEffect(() => {
@@ -58,7 +63,14 @@ export default (props) => {
   }, [])
 
   function handleChange(e){
-    setBoroughs(e.target.value)
+    //setBoroughs(e.target.value)
+
+    navigate(
+      `/${_.kebabCase(e.target.value)}`,
+      {
+        state: {boroughs: e.target.value !== '' ? [e.target.value] : null},
+      }
+    )
   }
 
   return (
@@ -66,8 +78,8 @@ export default (props) => {
       <div className="container">
         <h1>Covid-19 London</h1>
         <p>Daily updated data of Covid-19 cases in the boroughs of London</p>        
-        <select name="borough" className="selector" onChange={(e) => handleChange(e)}>
-          <option value={londonBoroughs}>All boroughs</option>
+        <select name="borough" className="selector" onChange={(e) => handleChange(e)} defaultValue={pageContext.borough}>
+          <option value=''>All boroughs</option>
           {londonBoroughs.map((element) => (
             <option key={element} value={element}>{element}</option>
           ))}
@@ -78,7 +90,11 @@ export default (props) => {
             <Stats data={rawData} filter={boroughs} />    
             <p>Please help flatten the curve <a href="https://www.gov.uk/coronavirus">#StayHome</a> 🏚</p> 
           </>
-        }        
+        }
+        {!rawData &&
+        <>
+          <p>Loading..</p>
+        </>}
       </div>
       <footer>Data sourced from <a href="https://www.gov.uk/government/publications/covid-19-track-coronavirus-cases">gov.uk</a> | Developed by <a href="http://sharpify.co.uk/">Carlo Schiesaro</a></footer>
     </div>

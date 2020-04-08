@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 export default (props) => {
 
 
   function filterData(data, boroughs) {
 
-    
+
     let utlas = []
 
     for (let i = 0; i < data.length; i++) {
@@ -29,15 +29,15 @@ export default (props) => {
     return utlas
   }
 
-  
-  function getDelta(filteredData, i){
+
+  function getDelta(filteredData, i) {
 
     let delta = 0
 
     filteredData.map(element => {
       const serie = element.data
-      const today = serie[serie.length-i][1]  
-      const yesterday = serie[serie.length-i-1][1]  
+      const today = serie[serie.length - i][1]
+      const yesterday = serie[serie.length - i - 1][1]
       delta = delta + (today - yesterday)
     })
 
@@ -47,43 +47,36 @@ export default (props) => {
   function averageDelta(filterData) {
 
     let avgDeltas = 0
-    let delta = 0
 
     filteredData.map(element => {
-
       const serie = element.data
-
-      const yesterday = serie[serie.length-2][1]  
-      
+      const yesterday = serie[serie.length - 2][1]
       avgDeltas = avgDeltas + yesterday / serie.length
     })
 
     return avgDeltas;
   }
 
-  function getTotalCases(filteredData){
+  function getTotalCases(filteredData) {
     let total = 0
 
     filteredData.map(element => {
-
       const serie = element.data
-      const today = serie[serie.length-1][1]  
-
-      
+      const today = serie[serie.length - 1][1]
       total = total + today
     })
 
     return total;
   }
 
-  function getLastUpdated(filteredData){
+  function getLastUpdated(filteredData) {
     const element = filteredData[0].data
-    const lastUpdated = element[element.length-1][0]
+    const lastUpdated = element[element.length - 1][0]
     return new Date(lastUpdated).toLocaleDateString("en-GB");
   }
 
   const filteredData = filterData(props.data, props.filter)
-  const today = getDelta(filteredData, 1)  
+  const today = getDelta(filteredData, 1)
   const avgDelta = averageDelta(filteredData)
   const dailyDelta = ((today - avgDelta) / ((avgDelta + today) / 2) * 100).toFixed(1)
   const totalCases = getTotalCases(filteredData)
