@@ -40,13 +40,8 @@ const londonBoroughs = [
 
 export default ({pageContext}) => {
 
-
   const [rawData, setRawData] = useState()
-  const [boroughs, setBoroughs] = useState(window.history.state.boroughs || londonBoroughs)
-
-  console.log('window.history.state: ', window.history.state);
-  
-
+  const [boroughs, setBoroughs] = useState(pageContext.borough ? [pageContext.borough] : londonBoroughs)
 
   useEffect(() => {
     fetch("/.netlify/functions/covid")
@@ -62,23 +57,12 @@ export default ({pageContext}) => {
       })
   }, [])
 
-  function handleChange(e){
-    //setBoroughs(e.target.value)
-
-    navigate(
-      `/${_.kebabCase(e.target.value)}`,
-      {
-        state: {boroughs: e.target.value !== '' ? [e.target.value] : null},
-      }
-    )
-  }
-
   return (
     <div>
       <div className="container">
         <h1>Covid-19 London</h1>
         <p>Daily updated data of Covid-19 cases in the boroughs of London</p>        
-        <select name="borough" className="selector" onChange={(e) => handleChange(e)} defaultValue={pageContext.borough}>
+        <select name="borough" className="selector" multiple={false} onChange={(e) => navigate(`/${_.kebabCase(e.target.value)}`)} defaultValue={pageContext.borough}>
           <option value=''>All boroughs</option>
           {londonBoroughs.map((element) => (
             <option key={element} value={element}>{element}</option>
@@ -93,10 +77,10 @@ export default ({pageContext}) => {
         }
         {!rawData &&
         <>
-          <p>Loading..</p>
+          <div className="loading">Loading..</div>
         </>}
       </div>
-      <footer>Data sourced from <a href="https://www.gov.uk/government/publications/covid-19-track-coronavirus-cases">gov.uk</a> | Developed by <a href="http://sharpify.co.uk/">Carlo Schiesaro</a></footer>
+      <footer>Data sourced from <a href="https://www.gov.uk/government/publications/covid-19-track-coronavirus-cases">gov.uk</a> | Developed by <a href="http://sharpify.co.uk/">Carlo Schiesaro</a> | For suggestions and feedback please check out my <a href="https://github.com/breiko83/covid-london-gatsby">repository on Github</a>.</footer>
     </div>
   )
 }

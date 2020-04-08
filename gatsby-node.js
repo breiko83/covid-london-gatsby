@@ -43,12 +43,12 @@ exports.createPages = async ({ actions }) => {
 
     // default template
     let template = path.resolve(`src/pages/index.js`)
-    let slug = `/${_.kebabCase(node)}`
+    let slug = _.kebabCase(node)
 
     createPage({
-      path: slug,
+      path: `/${slug}`,
       component: template,
-      context: {borough: node}, // additional data can be passed via context
+      context: {borough: node, slug: slug}, // additional data can be passed via context
     })
   })
 }
