@@ -1,7 +1,8 @@
 import React from 'react'
 import { navigate } from "gatsby"
-import Chart from '../components/chart'
-import Stats from '../components/stats'
+import Chart from './chart'
+import Stats from './stats'
+import SiteMetadata from './site-metadata'
 
 const londonBoroughs = [
   ['All boroughs',''],
@@ -43,8 +44,9 @@ export default ({pageContext}) => {
   const rawData = pageContext.data
   const boroughs = pageContext.borough
 
-  return (
+  return (    
     <div>
+      <SiteMetadata pathname={pageContext.slug} title={pageContext.borough[0]}/>
       <div className="container">
         <h1>Covid-19 London</h1>
         <p>Daily updated data of Covid-19 cases in the boroughs of London</p>        
