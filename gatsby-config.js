@@ -26,6 +26,14 @@ module.exports = {
     )
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // The property ID; the tracking code won't be generated without it
+        trackingId: "UA-55073449-7",
+        head: true,
+      }
+    },
     `gatsby-plugin-sass`,
     {
       resolve: 'gatsby-plugin-web-font-loader',
@@ -34,14 +42,7 @@ module.exports = {
           families: ['Droid Sans', 'Droid Serif']
         }
       }
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // The property ID; the tracking code won't be generated without it
-        trackingId: "UA-55073449-7",
-      }
-    },
+    },    
     [`gatsby-plugin-react-helmet`]
   ]
 }
