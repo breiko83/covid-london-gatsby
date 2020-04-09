@@ -51,11 +51,19 @@ exports.createPages = async ({ actions }) => {
 
     let slug = _.kebabCase(node)
 
-    createPage({
-      path: node === "All boroughs" ? `/` : `/${slug}`,
-      component: template,
-      context: { borough: [node], slug: slug, data: resultData }, // additional data can be passed via context
-    })
+    if(node === "All boroughs"){
+      createPage({
+        path: `/`,
+        component: template,
+        context: { borough: londonBoroughs, slug: slug, data: resultData }, // additional data can be passed via context
+      })
+    }else{
+      createPage({
+        path:  `/${slug}`,
+        component: template,
+        context: { borough: [node], slug: slug, data: resultData }, // additional data can be passed via context
+      })
+    } 
   })
 }
 
