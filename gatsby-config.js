@@ -7,11 +7,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
 module.exports = {
-  siteMetadata: {
-    defaultTitle: `Covid-19 London`,
-    siteUrl: `https://covid-london.netlify.com/`,
-    description: `Daily updated data of Covid-19 cases in the boroughs of London`,
-  },
   // for avoiding CORS while developing Netlify Functions locally
   // read more: https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying
   developMiddleware: app => {
@@ -24,6 +19,11 @@ module.exports = {
         },
       })
     )
+  },
+  siteMetadata: {
+    defaultTitle: `Covid-19 London`,
+    siteUrl: `https://covid-london.netlify.com/`,
+    description: `Daily updated data of Covid-19 cases in the boroughs of London`,
   },
   plugins: [
     {
@@ -43,6 +43,6 @@ module.exports = {
         }
       }
     },    
-    [`gatsby-plugin-react-helmet`]
+    `gatsby-plugin-react-helmet`,    
   ]
 }

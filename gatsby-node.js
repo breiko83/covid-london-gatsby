@@ -4,7 +4,7 @@ require('isomorphic-fetch')
 
 exports.createPages = async ({ actions }) => {
   const { createPage } = actions
-
+  
   const londonBoroughs = [
     'All boroughs',
     'Barking and Dagenham',
@@ -51,27 +51,11 @@ exports.createPages = async ({ actions }) => {
 
     let slug = _.kebabCase(node)
 
-    if(node === "All boroughs"){
-      createPage({
-        path: `/`,
-        component: template,
-        context: { borough: [node], slug: slug, data: resultData }, // additional data can be passed via context
-      })
-    }else{
-      createPage({
-        path: `/${slug}`,
-        component: template,
-        context: { borough: [node], slug: slug, data: resultData }, // additional data can be passed via context
-      })
-    }
-
-  })
-
-  //create index page
-  createPage({
-    path: `/`,
-    component: template,
-    context: { borough: londonBoroughs, slug: '/', data: resultData }, // additional data can be passed via context
+    createPage({
+      path: node === "All boroughs" ? `/` : `/${slug}`,
+      component: template,
+      context: { borough: [node], slug: slug, data: resultData }, // additional data can be passed via context
+    })
   })
 }
 
