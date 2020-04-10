@@ -1,6 +1,6 @@
 ## Covid-19 London
 
-Dispaying daily updated data of Covid-19 cases in the boroughs of London
+Displaying daily updated data of Covid-19 cases in the boroughs of London
 
 ### Data source
 
