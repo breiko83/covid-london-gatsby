@@ -1,6 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql, useStaticQuery } from "gatsby"
+import image from "../../static/assets/covid-london.png"
 
 const SiteMetadata = ({ pathname, title }) => {
   const {
@@ -35,6 +36,7 @@ const SiteMetadata = ({ pathname, title }) => {
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en" />
       <meta property="og:site_name" content={title} />>
+      <meta property="og:image" content={`${siteUrl}${image}`} />
 
     </Helmet>
   )
